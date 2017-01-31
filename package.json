@@ -13,5 +13,8 @@
     "excel"
   ],
   "author": "Tiago Ferreira <tiagojdferreira@gmail.com> (http://tiagojdferreira.github.io)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "csv": "^1.1.1"
+  }
 }

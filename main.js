@@ -12,7 +12,7 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
   const windowSize = { width: 800, height: 600 }
   mainWindow = new BrowserWindow(windowSize)
-  mainWindow.loadURL('file://' + __dirname + '/index.html')
+  mainWindow.loadURL('file://' + __dirname + '/app/index.html')
 
   mainWindow.on('closed', function() {
     mainWindow = null;
