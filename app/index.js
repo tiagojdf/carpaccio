@@ -14,24 +14,29 @@ holder.ondragleave = holder.ondragend = () => {
 holder.ondrop = (e) => {
   e.preventDefault()
   for (let f of e.dataTransfer.files) {
-    console.log(f);
     let header;
-    const fileStream = fs.createReadStream(f.path).pipe(parser)
-    // const fileStream = fs.createWriteStream(f.path).pipe(parser)
+    const readStream = fs.createReadStream(f.path).pipe(parser)
     // fileStream.setEncoding('utf8');
     let lines = 1
-    fileStream.on('data', function(data) {
+    let files = 1
+    let writeStream = fs.createWriteStream(f.path.replace(f.name, `${files}.csv`))
+    readStream.on('data', function(data) {
       if (header == null) header = data
       if (lines > MAX_LINES) {
+        writeStream.end();
         lines = 1
-        console.log(header);
-        console.log(data);
+        files++
+        writeStream = fs.createWriteStream(f.path.replace(f.name, `${files}.csv`))
+        writeStream.write(header.toString()+'\n')
+        // console.log(header);
+        // console.log(data);
       }
       lines++
-      console.log(lines)
+      writeStream.write(data.toString()+'\n')
+      // console.log(lines)
     })
 
-    fileStream.on('end', function(data) {
+    readStream.on('end', function(data) {
       console.log('end');
     })
   }
